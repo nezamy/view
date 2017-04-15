@@ -3,7 +3,7 @@ namespace System\Views;
 /**
  * View
  */
-class view
+class View
 {
     private $config     = [];
     private $sections   = [];

@@ -1,0 +1,25 @@
+{
+    "name": "nezamy/view",
+    "type": "library",
+    "description": "View - Template engine for PHP",
+    "keywords": ["view", "justframework"],
+    "homepage": "https://github.com/nezamy/view",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mahmoud Elnezamy",
+            "email": "mahmoud@nezamy.com",
+            "homepage": "http://nezamy.com",
+            "role": "Full Stack Web Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "nezamy/cache": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "System\\": "system"
+        }
+    }
+}

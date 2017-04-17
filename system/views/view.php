@@ -1,5 +1,7 @@
 <?php
 namespace System\Views;
+use System\Cache;
+use System\Views\ViewCompiler;
 /**
  * View
  */
@@ -9,14 +11,33 @@ class View
     private $sections   = [];
     private $viewBag    = [];
 
+
     public function __construct(array $conf = [])
     {
         $this->config = array_merge([
             'path'      => 'views/',
             'theme'     => 'default/',
             'layout'    => 'layout/default.php',
-            'render'    => 'templates/',
+            'render'    => 'default/templates/',
+            'cache'     => 'storage/cache',
+            'compiler'  => false,
+            //===========  echo Compiler
+            //escape only
+            'contentTags'        => ['{{ ', ' }}'],
+            // escape and strip html tags
+            'escapedContentTags' => ['{( ', ' )}'],
+            //without escape
+            'rawTags'            => ['{! ', ' !}']
         ], $conf);
+
+        $this->echoCompiler = [
+            $this->config['contentTags'][0]         => '<?= $this->escape(',
+            $this->config['contentTags'][1]         => ');?>',
+            $this->config['escapedContentTags'][0]  => '<?= $this->escape(',
+            $this->config['escapedContentTags'][1]  => ', TRUE);?>',
+            $this->config['rawTags'][0]             => '<?= ',
+            $this->config['rawTags'][1]             => ';?>',
+        ];
     }
 
     public function getPath($file = null){
@@ -57,7 +78,7 @@ class View
 		if ( is_file($file = $this->getPath($file . '.php')) ) {
             $this->data = $vars;
 			extract($vars, EXTR_OVERWRITE|EXTR_REFS);
-			include($file);
+			include($this->cache($file));
             $this->end();
 		} else {
             throw new \Exception("Views: File not found $file");
@@ -71,7 +92,7 @@ class View
 		foreach ( (array)$parts as $part ) {
 			if ( is_file($file = $this->getRenderPath($part)) ) {
                 extract($vars, EXTR_OVERWRITE|EXTR_REFS);
-                include($file);
+                include($this->cache($file));
 			} else {
                 throw new \Exception("Views: Render File not found $file");
             }
@@ -102,7 +123,7 @@ class View
 	public function end()
 	{
 		if ($this->config['layout'] !== false && is_file($file = $this->getLayoutPath()) ) {
-            require($file);
+            require($this->cache($file, true));
 		}
 	}
 
@@ -125,6 +146,54 @@ class View
 		}
 		return $this;
 	}
+
+    /**
+	 * Cache compiled file
+	 *
+	 * @param   string $file
+	 * @param   bool $layout
+	 * @return  string
+	 */
+	private function cache($file, $layout=false)
+	{
+        if(!$this->config['compiler']){
+            return $file;
+        }
+
+		return (new Cache([
+            'path' => $this->config['cache']
+        ]))->compiled($file, $file, $this->setCacheCompiler($file, $layout));
+	}
+
+    /**
+	 * Set Cache Compiler
+	 *
+	 * @param   string $f
+	 * @param   bool $layout
+	 * @return  string
+	 */
+	private function setCacheCompiler($f, $layout=false)
+	{
+        $viewCompiler = new viewCompiler($this);
+        $viewCompiler->content = file_get_contents($f);
+
+		if($layout === true) {
+			return $viewCompiler->runCompiler([
+                'renderCompiler',
+                'startLayoutSectionCompiler',
+                'echoCompiler'
+            ]);
+		} else {
+			return $viewCompiler->runCompiler(['startLayoutSectionCompiler'], true);
+		}
+	}
+
+    public function escape($text, $strip=false){
+        if($strip){
+            return strip_tags($text);
+        }
+        return htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
+    }
 
     /**
      * Magic call.

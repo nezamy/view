@@ -20,7 +20,7 @@ class View
             'layout'    => 'layout/default.php',
             'render'    => 'default/templates/',
             'cache'     => 'storage/cache',
-            'compiler'  => false,
+            'compiler'  => true,
             //===========  echo Compiler
             //escape only
             'contentTags'        => ['{{ ', ' }}'],

@@ -59,8 +59,7 @@ class View
 	 *
 	 * @return $this
 	 */
-	public function layout($layout)
-    {
+	public function layout($layout){
 		$this->config['layout'] = $layout;
 		return $this;
 	}

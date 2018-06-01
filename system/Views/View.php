@@ -178,10 +178,10 @@ class View
 
 		if($layout === true) {
 			return $viewCompiler->runCompiler([
-                'renderCompiler',
-                'startLayoutSectionCompiler',
-                'echoCompiler'
-            ]);
+				'renderCompiler',
+				'startLayoutSectionCompiler',
+				'echoCompiler'
+			]);
 		} else {
 			return $viewCompiler->runCompiler(['startLayoutSectionCompiler'], true);
 		}

@@ -11,8 +11,8 @@ class ViewCompiler extends Compiler
     {
         // extendsCompiler =======================
         $this->setCompiler(
-            'extendsCompiler',
-            '/(@extends\()([\'|"][a-z0-9.\/_-]+[\'|"])(\))/i',
+            'extendsLayoutCompiler',
+            '/(@layout\()([\'|"][a-z0-9.\/_-]+[\'|"])(\))/i',
             function($match){
                 $rep1 = '<?php $this->layout(';
     			$rep2 = ');?>';

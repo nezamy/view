@@ -71,7 +71,7 @@ $view->view('home', [
 @section('pageTitle'){{ $pageName }}@end
 
 @section('content')
-<h2>Hello it's come from view file</h2>
+<h2>Hello it`s come from view file</h2>
 @end
 
 // scripts for this page only 

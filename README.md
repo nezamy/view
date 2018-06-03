@@ -89,11 +89,11 @@ $view->view('home', [
     $news = [
         [
             'title' => 'Hello World',
-            'content' => 'Here is some content',
+            'content' => '<p>Here is some content</p>',
         ],
         [
             'title' => 'Second page',
-            'content' => 'Here is some content for second page',
+            'content' => '<p>Here is some content for second page</p>',
         ]
     ];
 }@
@@ -101,14 +101,15 @@ $view->view('home', [
 @section('content')
     <h2>Hello it's come from view file</h2>
     <?php foreach($news as $item);?>
-        @render('block.php', ['item' => $item])
+        @render('block', ['item' => $item])
     <?php endforeach;?>
 @end
 ```
 - Render file (views/default/templates/block.php)
 ```php
 <div>
-
+    <h2>{{ $item['title'] }}</h2>
+    {! $item['content'] !}
 </div>
 ```
 

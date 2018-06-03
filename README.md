@@ -110,6 +110,7 @@ $view->view('home', [
 <div>
     <h2>{{ $item['title'] }}</h2>
     {! $item['content'] !}
+    <br /><hr /> <br />
 </div>
 ```
 

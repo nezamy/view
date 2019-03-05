@@ -122,6 +122,7 @@ class View
 	public function end()
 	{
 		if ($this->config['layout'] !== false && is_file($file = $this->getLayoutPath()) ) {
+			extract($this->data, EXTR_OVERWRITE|EXTR_REFS);
             require($this->cache($file, true));
 		}
 	}

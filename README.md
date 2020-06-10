@@ -100,7 +100,7 @@ $view->view('home', [
 
 @section('content')
     <h2>Hello it's come from view file</h2>
-    <?php foreach($news as $item);?>
+    <?php foreach($news as $item):?>
         @render('block', ['item' => $item])
     <?php endforeach;?>
 @end

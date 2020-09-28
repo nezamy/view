@@ -138,9 +138,9 @@ class View
 	public function ViewBag($k=null, $v=null)
     {
 		if($v !== null){
-			$this->viewBag->$k = $v;
+			$this->viewBag[$k] = $v;
 		}elseif($k !== null){
-			return $this->viewBag->$k;
+			return $this->viewBag[$k];
 		}else{
 			return $this->viewBag;
 		}

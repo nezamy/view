@@ -123,6 +123,7 @@ class View
 	{
 		if ($this->config['layout'] !== false && is_file($file = $this->getLayoutPath()) ) {
 			extract($this->data, EXTR_OVERWRITE|EXTR_REFS);
+			ob_get_clean();
             require($this->cache($file, true));
 		}
 	}

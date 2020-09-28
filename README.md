@@ -1,10 +1,14 @@
 # View
 View - Template engine for PHP
 
+## Installition
+```
+composer require nezamy/view
+```
 
 ## Usage
 ```php
-require 'system/views/view.php';
+require BASE_PATH.'vendor/autoload.php';
 $view = new System\Views\View;
 $view->view('home');
 ```

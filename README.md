@@ -10,7 +10,7 @@ composer require nezamy/view
 ```php
 require BASE_PATH.'vendor/autoload.php';
 $view = new System\Views\View;
-$view->view('home');
+$view->view('home', ['content' => 'Here the content passed from Controller']);
 ```
 
 ## Default Options
@@ -32,6 +32,8 @@ $view = new System\Views\View([
 ]);
 $view->view('home');
 // pass data
+$view->view('home', ['contentFromController' => 'The content passed from Controller']);
+//OR
 $view->view('home', [
     'news' => [
         [
@@ -69,13 +71,15 @@ $view->view('home', [
 - View file (views/default/home.php)
 ```php
 @{
-    $pageName = 'home page';
+    //create variable outside section
+    $this->ViewBag('pageName', ''home page'');
 }@
 
-@section('pageTitle'){{ $pageName }}@end
+@section('pageTitle'){{ $ViewBag['pageName'] }}@end
 
 @section('content')
 <h2>Hello it`s come from view file</h2>
+<p>{{ $contentFromController }}</p>
 @end
 
 // scripts for this page only 

@@ -112,7 +112,7 @@ class View
 		if($callback){
 			$this->sections[$name] = $callback;
 		}else{
-			return array_key_exists($name, $this->sections) ? $this->sections[$name]($this->data) : null;
+			return array_key_exists($name, $this->sections) ? $this->sections[$name]($this->viewBag) : null;
 		}
 	}
 

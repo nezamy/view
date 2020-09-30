@@ -1,7 +1,7 @@
 # View
 View - Template engine for PHP
 
-## Installition
+## Installation
 ```
 composer require nezamy/view
 ```
@@ -72,7 +72,7 @@ $view->view('home', [
 ```php
 @{
     //create variable outside section
-    $this->ViewBag('pageName', ''home page'');
+    $this->ViewBag('pageName', 'home page');
 }@
 
 @section('pageTitle'){{ $ViewBag['pageName'] }}@end
